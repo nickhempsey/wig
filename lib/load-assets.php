@@ -24,8 +24,8 @@ function bsg_enqueue_css_js() {
 
     // Animations
     // wp_enqueue_style( 'bsg_animate_css', get_stylesheet_directory_uri() . '/css/animate.min.css' );
-    wp_enqueue_style( 'bsg_animate_on_scroll_css', 'https://unpkg.com/aos@next/dist/aos.css' );
-    wp_enqueue_script( 'bsg_animate_on_scroll_js', 'https://unpkg.com/aos@next/dist/aos.js', array( 'jquery' ), '1.0.0', true );
+    //wp_enqueue_style( 'bsg_animate_on_scroll_css', 'https://unpkg.com/aos@next/dist/aos.css' );
+    //wp_enqueue_script( 'bsg_animate_on_scroll_js', 'https://unpkg.com/aos@next/dist/aos.js', array( 'jquery' ), '1.0.0', true );
 
 
     // Bootstrap
@@ -35,12 +35,12 @@ function bsg_enqueue_css_js() {
 
 
     // Scrollbar
-    wp_enqueue_script( 'bsg_scrollbar_js', 'https://cdn.jsdelivr.net/npm/simple-scrollbar@latest/simple-scrollbar.min.js', array( 'jquery' ), '1.0.0', true );
-    wp_enqueue_style( 'bsg_scrollbar_js', 'https://cdn.jsdelivr.net/npm/simple-scrollbar@latest/simple-scrollbar.css' );
+    //wp_enqueue_script( 'bsg_scrollbar_js', 'https://cdn.jsdelivr.net/npm/simple-scrollbar@latest/simple-scrollbar.min.js', array( 'jquery' ), '1.0.0', true );
+    //wp_enqueue_style( 'bsg_scrollbar_js', 'https://cdn.jsdelivr.net/npm/simple-scrollbar@latest/simple-scrollbar.css' );
 
     // Swiper
-    wp_enqueue_script( 'bsg_swiper_js', 'https://unpkg.com/swiper/js/swiper.min.js', array( 'jquery' ), '1.0.0', true );
-    wp_enqueue_style( 'bsg_swiper_css', 'https://unpkg.com/swiper/css/swiper.min.css' );
+    //wp_enqueue_script( 'bsg_swiper_js', 'https://unpkg.com/swiper/js/swiper.min.js', array( 'jquery' ), '1.0.0', true );
+    //wp_enqueue_style( 'bsg_swiper_css', 'https://unpkg.com/swiper/css/swiper.min.css' );
 
 
     // Common Theme

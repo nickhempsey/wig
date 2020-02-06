@@ -30,8 +30,7 @@ function bsg_be_remove_genesis_page_templates( $page_templates ) {
 add_filter( 'theme_page_templates', 'bsg_be_remove_genesis_page_templates' );
 
 
-/* Modify the Bootstrap Classes being applied
- * based on the Genesis template chosen
+/* Modify the Bootstrap Classes being applied based on the Genesis template chosen
  */
 
 
@@ -41,12 +40,31 @@ add_filter( 'genesis_markup_site-inner', '__return_null' );
 add_filter( 'genesis_markup_content-sidebar-wrap', '__return_null' );
 add_filter( 'genesis_markup_entry-content', '__return_null' );
 //Remove Entry Header
-remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
-remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
+// remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
+// remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
 remove_action( 'genesis_entry_header', 'genesis_post_info', 12 );
-remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+// remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 
 //Remove Entry Footer
 remove_action( 'genesis_entry_footer', 'genesis_entry_footer_markup_open', 5 );
 remove_action( 'genesis_entry_footer', 'genesis_entry_footer_markup_close', 15 );
 remove_action( 'genesis_entry_footer', 'genesis_post_meta' );
+
+
+add_filter( 'body_class', 'custom_body_class' );
+function custom_body_class( $classes ) {
+    $classes[] = ' d-flex flex-column flex-md-row align-items-start align-items-md-stretch justify-content-start justify-content-md-between menu-closed';
+    return $classes;
+}
+
+
+add_filter( 'genesis_attr_content', 'bsg_filter_content' );
+function bsg_filter_content( $attributes ) {
+    $attributes['class'] = $attributes['class'].' py-5 px-3';
+    // $attributes['data-aos'] = "fade-right";
+    // $attributes['data-aos-offset'] = "0";
+    // $attributes['data-aos-delay'] = "0";
+    // $attributes['data-aos-duration'] = "500";
+    // $attributes['data-aos-easing'] = "ease-in-out";
+    return $attributes;
+}

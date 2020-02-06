@@ -26,17 +26,6 @@ function GET($name=NULL, $value=false, $option="default") {
 }
 
 
-function get_content_by_id($id) {
-	$content = '';
-	if($id) {
-		$content_post = get_post($id);
-		$content = $content_post->post_content;
-		$content = apply_filters('the_content', $content);
-		$content = str_replace(']]>', ']]&gt;', $content);
-	}
-	return $content;
-}
-
 
 function get_json_data($url) {
     if($url) {
@@ -53,11 +42,11 @@ function get_json_data($url) {
 }
 
 
-function get_googlesheet_data($sheetID) {
-    if($sheetID) {
-        $sheet            = '1X-Dma_ySPefi3YAIHlW-2T68wsX34RQSxTkkkH-3O8Y';
-        $sheetURL   = 'http://gsx2json.com/api?id='.$sheet.'&sheet='.$sheetID;
-        $obj = get_json_data($sheetURL);
+function get_sheet_data($id) {
+    if($id) {
+        $sheet      = '14j4vM2EgfikCqFhmzox09Sq5R1pRdetANoF9Xi05rdM';
+        $sheetURL   = 'http://gsx2json.com/api?id='.$sheet.'&sheet='.$id;
+        $obj        = get_json_data($sheetURL);
 
         return $obj;
     }
