@@ -35,6 +35,13 @@
                 "operator": "==",
                 "value": "views"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
         ]
     ],
     "menu_order": 1,
@@ -58,5 +65,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1581009386
+    "modified": 1581273700
 }

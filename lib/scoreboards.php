@@ -15,6 +15,26 @@ function wig_scorebord_data($postID = '') {
     return $data;
 }
 
+function wig_data_test() {
+    $data = get_sheet_data(1);
+    if($data) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function wig_error_output($code, $desc, $class) {
+    return '<div class="alert alert-'.$class.'" role="alert">Error '.$code.': '.$desc.'.</div>';
+}
+
+add_action('genesis_before_loop', 'wig_data_error');
+function wig_data_error() {
+    if(wig_data_test() == false) {
+        echo wig_error_output('808', 'Failure to get dope beats from Google Sheets.', 'danger');
+    }
+}
+
 function get_wig($array) {
     if($array) {
         return $array['columns']['description'][0];
@@ -111,6 +131,41 @@ function is_loss( $metric, $goal, $operator = '>') {
 
 }
 
+
+
+/**** Time Functions
+--------------------------------------------------- */
+function wig_convert_date($date) {
+    $year = date('Y');
+    preg_match_all('![a-z]+!', $date, $mon);
+    preg_match_all('!\d+!', $date, $day);
+    $date = strtotime($day[0][0].' '.$mon[0][0].', '.$year);
+
+    return date('M j', $date);
+}
+
+function is_before_today($date) {
+    $today = strtotime('today');
+    $year = date('Y');
+    preg_match_all('![a-z]+!', $date, $mon);
+    preg_match_all('!\d+!', $date, $day);
+    $date = strtotime($day[0][0].' '.$mon[0][0].', '.$year);
+    //echo $day[0][0].' '.$mon[0][0].' <br>';
+    //print_r($day);
+    if($today > $date) {
+        return true;
+    }
+}
+
+function is_before_this_month($date) {
+    $today = strtotime('today');
+    $year = date('Y');
+    $date = strtotime($date.' 01, '.$year);
+    if($today > $date) {
+        return true;
+    }
+}
+
 function get_week_of_month($date) {
     $firstOfMonth = strtotime(date("Y-m-01", strtotime($date)));
 
@@ -122,6 +177,17 @@ function get_month_total($array, $month) {
         $key = array_search($month, $array['columns']['title']);
 
         return $array['rows'][$key]['total'];
+    }
+}
+
+function get_month_goal($array, $month, $goalType = 'totalgoal') {
+    // Type = totalgoal or avggoal
+    if($array && $month && $goalType) {
+        $key = array_search($month, $array['columns']['title']);
+
+        return $array['rows'][$key][$goalType];
+
+        echo $goalType;
     }
 }
 
@@ -163,14 +229,90 @@ function get_time_measurement($timeMeasure, $date = '', $dateMonthly = '') {
 
 
 
+
+
+/**** Array Compliling for Chart.js
+--------------------------------------------------- */
+
+function wig_parse_chart_data($array, $id, $type = 'Goal', $return = 'value', $dateType = 'Weekly', $checkWin = true, $operator = '>' ) {
+    // $type = goal || metric
+    // $return =  value || key || color || border
+    // $dateType = Weekly || Monthly
+    $row = '';
+    if($type == 'Goal') {
+        $row = get_goal_row($array, $id);
+    } elseif($type == 'Metric') {
+        $row = get_metric_row($array, $id);
+    }
+    //echo $dateType;
+    if($row && ($type == 'Goal' || $type == 'Metric')) {
+        $keys = array();
+        $values = array();
+        $colors = array();
+        $borders = array();
+        $exceptions = array('totalgoal', 'total', 'avg', 'avggoal');
+        $arrayCount = 0;
+        foreach($row as $key => $value) {
+            if($arrayCount > 1 && !in_array($key, $exceptions)) {
+
+                // Weekly Key/Values
+                if($dateType === 'Weekly') {
+
+                    if(is_before_today($key)) {
+                        if($return == 'key' || $return == 'value') {
+                            $keys[] = wig_convert_date($key);
+                            $values[] = $value;
+                        }
+                    }
+                }
+
+                // Monthly Key/Values
+                if($dateType === 'Monthly') {
+                    if(is_before_this_month($key)) {
+                        if($return == 'key' || $return == 'value') {
+                            $keys[] = ucfirst($key);
+                            $values[] = $value;
+                        }
+                     }
+                }
+
+                if(($return == 'color' || $return == 'border') && $type == 'Metric') {
+                    if($checkWin) {
+                        if(is_win($value, get_goal_value($array, $id, $key), $operator)) {
+                            $colors[] = 'rgba(120,192, 118, 30)';
+                            $borders[] = 'rgba(120,192, 118, 50)';
+                        } else {
+                            $colors[] = 'rgba(174, 63, 63, 30)';
+                            $borders[] = 'rgba(174, 63, 63, 50)';
+                        }
+                    }
+                }
+            }
+            $arrayCount++;
+        }
+
+        // Return keys or values
+        if($return == 'value') {
+            return $values;
+        } elseif($return == 'key') {
+            return $keys;
+        } elseif($return == 'color') {
+            return $colors;
+        } elseif($return == 'border') {
+            return $borders;
+        }
+    }
+
+}
+
 /**** Layout functions
 --------------------------------------------------- */
 
 function wig_single_card($type, $title, $val, $pre = '', $post = '', $classes, $win = '') {
     $classes = $classes ? $classes : 'col-12 col-sm-6 col-md-3';
     ?>
-    <div class="single-metric-card text-center px-3 mb-4 <?= $classes; ?> <?= $type; ?>">
-        <div class="p-3 bg-dark h-100">
+    <div class="single-metric-card text-center px-2 mb-4 <?= $classes; ?> <?= $type; ?>">
+        <div class="p-3 bg-dark h-100 border card">
             <h3 class="title small text-center text-uppercase text-muted"><?= $title; ?></h3>
             <h4 class="value <?= $win; ?> mb-0"><strong><?= $pre.$val.$post; ?></strong></h4>
         </div>
@@ -182,9 +324,11 @@ function wig_single_card($type, $title, $val, $pre = '', $post = '', $classes, $
 function wig_multi_card($type, $title, $val, $pre = '', $post = '', $classes, $win = '') {
     //$classes = $classes ? $classes : 'col-12 col-sm-6 col-md-3';
     ?>
-    <div class="multi-metric-value <?= $type ?> col-6 p-2">
-        <div class="title"><?= $title; ?></div>
-        <div class="value <?= $win; ?>"><?= $pre.$val.$post; ?></div>
+    <div class="multi-metric-value <?= $type ?> col-6 p-2 d-flex align-items-center justify-content-center">
+        <div>
+            <h3 class="title small text-center text-uppercase text-muted"><?= $title; ?></h3>
+            <h4 class="value <?= $win; ?>"><strong><?= $pre.$val.$post; ?></strong></h4>
+        </div>
     </div>
     <?php
 }
@@ -232,31 +376,50 @@ function wig_single_metric($type = 'single',$array, $title, $metric, $date, $cla
 
 
 
-function wig_single_total($type = 'single', $array, $title, $date, $classes, $pre = '', $post = '') {
+function wig_single_total($type = 'single', $array, $title, $date, $classes, $pre = '', $post = '',$operator = '>', $checkWin = true) {
 
     $title = $title ? $title : $date;
     $val = get_month_total($array, $date);
     $classes = $classes ? $classes : 'col-12 col-sm-6 col-md-3';
 
+    $win = '';
+    if($checkWin == true) {
+        if(is_win($val, get_month_goal($array, $date, 'totalgoal'), $operator)) {
+            $win = 'win';
+        } else {
+            $win = 'loss';
+        }
+    }
+
     if($type == 'multi') {
-        wig_multi_card('total', $title, $val, $pre, $post, $classes);
+        wig_multi_card('total', $title, $val, $pre, $post, $classes, $win);
     } else {
-        wig_single_card('total', $title, $val, $pre, $post, $classes);
+        wig_single_card('total', $title, $val, $pre, $post, $classes, $win);
     }
 
 }
 
 
-function wig_single_avg($type = 'single', $array, $title, $date, $classes, $pre = '', $post = '') {
+function wig_single_avg($type = 'single', $array, $title, $date, $classes, $pre = '', $post = '', $operator = '>', $checkWin = true) {
 
     $title = $title ? $title : $date;
     $val = get_month_avg($array, $date);
     $classes = $classes ? $classes : 'col-12 col-sm-6 col-md-3';
 
+    $win = '';
+    if($checkWin == true) {
+        if(is_win($val, get_month_goal($array, $date, 'avggoal'), $operator)) {
+            $win = 'win';
+        } else {
+            $win = 'loss';
+        }
+    }
+
+
     if($type == 'multi') {
-        wig_multi_card('average', $title, $val, $pre, $post, $classes);
+        wig_multi_card('average', $title, $val, $pre, $post, $classes, $win);
     } else {
-        wig_single_card('average', $title, $val, $pre, $post, $classes);
+        wig_single_card('average', $title, $val, $pre, $post, $classes, $win);
     }
 
 }
@@ -379,16 +542,17 @@ function wig_single_metrics_board() {
                 if($m['type'] == 'Total') {
                     //echo '<pre>'.print_r($m, true).'</pre>';
 
-                    wig_single_total('single', $data, $m['title'], $useDate, $m['classes'], $m['prepend'], $m['append']);
+                    wig_single_total('single', $data, $m['title'], $useDate, $m['classes'], $m['prepend'], $m['append'],$m['win_operator'], $m['check_win']);
                 }
 
                 if($m['type'] == 'Average') {
                     //echo '<pre>'.print_r($m, true).'</pre>';
 
-                    wig_single_avg('single', $data, $m['title'], $useDate, $m['classes'], $m['prepend'], $m['append']);
+                    wig_single_avg('single', $data, $m['title'], $useDate, $m['classes'], $m['prepend'], $m['append'], $m['win_operator'], $m['check_win']);
                 }
 
             }
         echo '</div>';
     }
+    //if(is_user_logged_in()) { echo '<a href="'.get_edit_post_link().'">Edit Scoreboard</a>'; }
 }

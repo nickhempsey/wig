@@ -7,16 +7,9 @@ add_action( 'wp_enqueue_scripts', 'bsg_enqueue_css_js' );
 
 function bsg_enqueue_css_js() {
 
-    // Manage jQuery Version locally
-    //wp_deregister_script('jquery');
-    wp_register_script('jquery_3_4_1',  get_stylesheet_directory_uri() . '/js/jq.min.js', true, null);
-    //wp_enqueue_script('jquery_3_4_1');
-
     // Fonts
     wp_enqueue_style( 'bsg_fonts_opensans', 'https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,400i,700,900&display=swap' );
 
-    // Load Fonts Locally as oppsed to from Google
-    //wp_enqueue_style( 'bsg_fonts_css', get_stylesheet_directory_uri() . '/css/fonts.css' );
 
     // Font Awesome
     wp_enqueue_script( 'bsg_fontawesome_js', 'https://kit.fontawesome.com/c4b7a60a1d.js', array(), '', true );
@@ -28,19 +21,11 @@ function bsg_enqueue_css_js() {
     //wp_enqueue_script( 'bsg_animate_on_scroll_js', 'https://unpkg.com/aos@next/dist/aos.js', array( 'jquery' ), '1.0.0', true );
 
 
+    //wp_enqueue_script( 'bsg_chart_js', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js', array(), '1.0.0', false );
     // Bootstrap
     wp_enqueue_script( 'bsg_popper_js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js', array( 'jquery' ), '1.0.0', true );
     wp_enqueue_script( 'bsg_bootstrap_js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array( 'jquery' ), '1.0.0', true );
     wp_enqueue_style( 'bsg_bootstrap_css', get_stylesheet_directory_uri() . '/css/bootstrap/bootstrap.min.css' );
-
-
-    // Scrollbar
-    //wp_enqueue_script( 'bsg_scrollbar_js', 'https://cdn.jsdelivr.net/npm/simple-scrollbar@latest/simple-scrollbar.min.js', array( 'jquery' ), '1.0.0', true );
-    //wp_enqueue_style( 'bsg_scrollbar_js', 'https://cdn.jsdelivr.net/npm/simple-scrollbar@latest/simple-scrollbar.css' );
-
-    // Swiper
-    //wp_enqueue_script( 'bsg_swiper_js', 'https://unpkg.com/swiper/js/swiper.min.js', array( 'jquery' ), '1.0.0', true );
-    //wp_enqueue_style( 'bsg_swiper_css', 'https://unpkg.com/swiper/css/swiper.min.css' );
 
 
     // Common Theme

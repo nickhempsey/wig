@@ -51,6 +51,7 @@ remove_action( 'genesis_entry_footer', 'genesis_entry_footer_markup_close', 15 )
 remove_action( 'genesis_entry_footer', 'genesis_post_meta' );
 
 
+
 add_filter( 'body_class', 'custom_body_class' );
 function custom_body_class( $classes ) {
     $classes[] = ' d-flex flex-column flex-md-row align-items-start align-items-md-stretch justify-content-start justify-content-md-between menu-closed';
@@ -60,11 +61,24 @@ function custom_body_class( $classes ) {
 
 add_filter( 'genesis_attr_content', 'bsg_filter_content' );
 function bsg_filter_content( $attributes ) {
-    $attributes['class'] = $attributes['class'].' py-5 px-3';
-    // $attributes['data-aos'] = "fade-right";
-    // $attributes['data-aos-offset'] = "0";
-    // $attributes['data-aos-delay'] = "0";
-    // $attributes['data-aos-duration'] = "500";
-    // $attributes['data-aos-easing'] = "ease-in-out";
+    $attributes['class'] .= ' p-3';
+    if(wig_data_test()) {
+        $attributes['class'] .= ' data-loaded';
+    } else {
+        $attributes['class'] .= ' data-not-loaded';
+    }
     return $attributes;
+}
+
+add_action('genesis_after_loop', 'wig_edit_link');
+function wig_edit_link() {
+    if(is_user_logged_in()) {
+        $label = (
+            is_singular('views') ? 'Edit View' :
+            is_singular('scoreboards') ? 'Edit Scoreboard' :
+            'Edit'
+        );
+
+        echo '<div class="my-5"><a href="'.get_edit_post_link().'">'.$label.'</a></div>';
+    }
 }

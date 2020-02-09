@@ -13,7 +13,7 @@ add_action('genesis_header', 'bsg_site_header_container_close', 14);
 // Change the wrap classes for the site-header.
 add_filter( 'genesis_attr_site-header', 'bsg_filter_site_header' );
 function bsg_filter_site_header( $attributes ) {
-    $attributes['class'] = $attributes['class'].' py-5 px-3 closed';
+    $attributes['class'] = $attributes['class'].' py-3 closed border-right';
     // $attributes['data-aos'] = "fade-right";
     // $attributes['data-aos-offset'] = "0";
     // $attributes['data-aos-delay'] = "0";
@@ -81,7 +81,7 @@ function bsg_image_title( $title, $inside, $wrap ) {
 // Change the wrap classed for the logo.
 add_filter( 'genesis_attr_title-area', 'bsg_filter_title_area' );
 function bsg_filter_title_area( $attributes ) {
-    $attributes['class'] = $attributes['class'].' ';
+    $attributes['class'] = $attributes['class'].' px-3 ';
     $attributes['style'] = 'display:none;';
     return $attributes;
 }
@@ -99,7 +99,7 @@ function wig_close_header() {
 
 add_filter('genesis_attr_nav-primary','bsg_filter_nav_primary');
 function bsg_filter_nav_primary($attributes) {
-  //$attributes['class'] = $attributes['class'].'';
+  $attributes['class'] = $attributes['class'].' px-3';
   $attributes['style'] = 'display:none;';
   return $attributes;
 }

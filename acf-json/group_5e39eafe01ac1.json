@@ -273,6 +273,23 @@
                     "maxlength": ""
                 },
                 {
+                    "key": "field_5e404829c1dc2",
+                    "label": "",
+                    "name": "",
+                    "type": "message",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "new_lines": "wpautop",
+                    "esc_html": 0
+                },
+                {
                     "key": "field_5e39ecb71fc69",
                     "label": "Check Win?",
                     "name": "check_win",
@@ -309,9 +326,9 @@
                     "conditional_logic": [
                         [
                             {
-                                "field": "field_5e39eb591fc61",
-                                "operator": "!=",
-                                "value": "Goal"
+                                "field": "field_5e39ecb71fc69",
+                                "operator": "==",
+                                "value": "1"
                             }
                         ]
                     ],
@@ -331,6 +348,112 @@
                     "return_format": "value",
                     "ajax": 0,
                     "placeholder": ""
+                },
+                {
+                    "key": "field_5e404844c1dc3",
+                    "label": "",
+                    "name": "",
+                    "type": "message",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "new_lines": "wpautop",
+                    "esc_html": 0
+                },
+                {
+                    "key": "field_5e3efbf04c421",
+                    "label": "Show on views?",
+                    "name": "show_on_views",
+                    "type": "true_false",
+                    "instructions": "Setting this to true will show this metric on the User View pages as well as the Department Overview.  \r\n<strong>Please limit the amount of metrics shown to 4.<\/strong>",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
+                },
+                {
+                    "key": "field_5e3f251ee9ea5",
+                    "label": "WIG Ranking Metric",
+                    "name": "wig_ranking_metric",
+                    "type": "true_false",
+                    "instructions": "This metric will decide whether or not this month is a win.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
+                },
+                {
+                    "key": "field_5e40484ec1dc4",
+                    "label": "",
+                    "name": "",
+                    "type": "message",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "new_lines": "wpautop",
+                    "esc_html": 0
+                },
+                {
+                    "key": "field_5e4047438573b",
+                    "label": "Show on Chart?",
+                    "name": "show_on_chart",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
+                },
+                {
+                    "key": "field_5e40475c8573c",
+                    "label": "Line Color",
+                    "name": "line_color",
+                    "type": "color_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "#979797"
                 }
             ]
         }
@@ -365,5 +488,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1581010640
+    "modified": 1581271188
 }

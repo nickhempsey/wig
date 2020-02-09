@@ -2422,57 +2422,6 @@
 		"oS": 3,
 		"uL": 1
 		},
-	"/css/owl.carousel.min.css": {
-		"aP": 1,
-		"bl": 1,
-		"ft": 16,
-		"ma": 1,
-		"oA": 1,
-		"oAP": "/css/owl.carousel.min.min.css",
-		"oF": 0,
-		"oS": 3
-		},
-	"/css/owl.theme.default.min.css": {
-		"aP": 1,
-		"bl": 1,
-		"ft": 16,
-		"ma": 1,
-		"oA": 1,
-		"oAP": "/css/owl.theme.default.min.min.css",
-		"oF": 0,
-		"oS": 3
-		},
-	"/css/print.min.css": {
-		"aP": 1,
-		"bl": 1,
-		"ft": 16,
-		"ma": 1,
-		"oA": 1,
-		"oAP": "/css/print.min.min.css",
-		"oF": 0,
-		"oS": 3
-		},
-	"/css/print.min.css.map": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/css/print.min.css.map",
-		"oF": 0
-		},
-	"/css/print.scss": {
-		"aP": 1,
-		"bl": 1,
-		"dP": 10,
-		"dS": 0,
-		"ft": 4,
-		"ma": 1,
-		"oA": 1,
-		"oAP": "/css/print.min.css",
-		"oF": 2,
-		"oS": 3,
-		"uL": 1
-		},
 	"/css/style.min.css": {
 		"aP": 1,
 		"bl": 1,
@@ -2510,6 +2459,14 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/functions.php",
+		"oF": 0
+		},
+	"/home.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/home.php",
 		"oF": 0
 		},
 	"/images/logo.svg": {
@@ -2563,34 +2520,20 @@
 		"oAP": "/js/common.min.js.map",
 		"oF": 0
 		},
-	"/js/jq.min.js": {
-		"bF": 0,
-		"ft": 64,
-		"ma": 1,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "/js/jq.min.min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
-	"/js/owl.carousel.min.js": {
-		"bF": 0,
-		"ft": 64,
-		"ma": 1,
-		"mi": 1,
-		"oA": 1,
-		"oAP": "/js/owl.carousel.min.min.js",
-		"oF": 0,
-		"sC": 1,
-		"tS": 0
-		},
 	"/lib/acf.php": {
 		"cB": 0,
 		"ft": 8192,
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/lib/acf.php",
+		"oF": 0
+		},
+	"/lib/charts.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/lib/charts.php",
 		"oF": 0
 		},
 	"/lib/custom-post-types.php": {
@@ -2673,6 +2616,14 @@
 		"oAP": "/lib/search-form.php",
 		"oF": 0
 		},
+	"/lib/views.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/lib/views.php",
+		"oF": 0
+		},
 	"/LICENSE": {
 		"cB": 0,
 		"ft": 8192,
@@ -2700,6 +2651,14 @@
 		"oAP": "/single-scoreboards.php",
 		"oF": 0
 		},
+	"/single-views.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/single-views.php",
+		"oF": 0
+		},
 	"/style.css": {
 		"aP": 0,
 		"bl": 0,
@@ -2709,14 +2668,6 @@
 		"oAP": "/style.min.css",
 		"oF": 0,
 		"oS": 3
-		},
-	"/templates/template-home.php": {
-		"cB": 0,
-		"ft": 8192,
-		"hM": 0,
-		"oA": 0,
-		"oAP": "/templates/template-home.php",
-		"oF": 0
 		}
 	},
 "hooks": [

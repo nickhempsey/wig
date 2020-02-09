@@ -18,7 +18,7 @@ html,body {
 }
 
 body {
-    background: $gray-900;
+    background: $gray-800;
     color: white;
     height: 100vh;
     a {
@@ -35,6 +35,7 @@ body {
     height:100vh;
     display: block;
 }
+
 // Header
 .site-header {
     background: $black;
@@ -47,12 +48,12 @@ body {
         top: 1rem;
         right: 1rem;
         cursor: pointer;
-
+        color: #515151;
     }
 
     .title-area {
         text-align: center;
-        border-bottom: 1px solid #393939;
+        border-bottom: 1px solid $gray-700;
         padding: 0 0 1rem;
         margin: 0 0 1rem;
 
@@ -151,10 +152,43 @@ main.content {
 }
 
 
+.multi-metric-card {
+    .multi-metric-value {
+        border-right: 1px solid $gray-700;
+        border-bottom: 1px solid $gray-700;
+        &:nth-child(even) {
+            border-right:none;
+        }
+    }
+    .titles {
+        border-radius: 5px 5px 0 0;
+        height: 40px;
+        font-size: 1.2rem;
+        .icon {
+            opacity: .5;
+        }
+    }
+    .values {
+        border-radius: 0 0 5px 5px;
+        text-align: center;
+        height: calc(100% - 40px);
+        .value {
+            font-size: 250%;
+        }
+    }
+}
+
 .single-metric-card {
+    .card {
+        border-radius: 5px;
+    }
     .value {
         font-size: 350%;
     }
+}
+
+.border-radius {
+    border-radius: 5px;
 }
 
 
