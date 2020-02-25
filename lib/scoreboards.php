@@ -108,15 +108,18 @@ function get_metric_value($array, $id, $date) {
 }
 
 function is_win( $metric, $goal, $operator = '>') {
+    if($metric > 0) {
+        if($metric >= $goal && $operator == '>') {
+            // if the metric is greater than goal and the win operator is greater than output true
+            return true;
 
-    if($metric >= $goal && $operator == '>') {
-        // if the metric is greater than goal and the win operator is greater than output true
-        return true;
-
-    } elseif($metric <= $goal && $operator == '<') {
-        // if metric is less than goal and the win operator is less than output true
-        return true;
-    } else {
+        } elseif($metric <= $goal && $operator == '<') {
+            // if metric is less than goal and the win operator is less than output true
+            return true;
+        } else {
+            return false;
+        }
+    }  else {
         return false;
     }
 }
@@ -187,7 +190,7 @@ function get_month_goal($array, $month, $goalType = 'totalgoal') {
 
         return $array['rows'][$key][$goalType];
 
-        echo $goalType;
+        //echo $goalType;
     }
 }
 
@@ -213,17 +216,19 @@ function get_last_month_avg($array) {
     }
 }
 
-function get_time_measurement($timeMeasure, $date = '', $dateMonthly = '') {
+function get_time_measurement($metricType, $date = '', $dateMonthly = '') {
     $useDate = '';
-    if($timeMeasure == 'Weekly') {
+
+    if(in_array($metricType, array('Total', 'Total Goal', 'Average', 'Average Goal'))) {
+        if($dateMonthly == 'This Month')       { $useDate = get_this_month(); }
+        elseif($dateMonthly == 'Last Month')   { $useDate = get_last_month(); }
+    } else {
         if($date == 'This Week')        { $useDate = get_this_week();  }
         elseif($date == 'Last Week')    { $useDate = get_last_week();  }
         elseif($date == 'This Month')   { $useDate = get_this_month(); }
         elseif($date == 'Last Month')   { $useDate = get_last_month(); }
-    } elseif($timeMeasure == 'Monthly') {
-        if($dateMonthly == 'This Month')       { $useDate = strtolower(get_this_month()); }
-        elseif($dateMonthly == 'Last Month')   { $useDate = strtolower(get_last_month()); }
     }
+
     return $useDate;
 }
 
@@ -334,96 +339,92 @@ function wig_multi_card($type, $title, $val, $pre = '', $post = '', $classes, $w
 }
 
 
-function wig_single_goal($type = 'single', $array, $title, $id, $date, $classes, $pre = '', $post = '') {
+function wig_value_output($type = 'single', $array, $metricType = '', $title = '', $id = '', $date = '', $classes = '', $pre = '', $post = '', $operator = '>', $checkWin = false) {
 
-    // Defaults
-    $title = $title ? $title : get_goal_desc($array, $id);
-    $val = get_goal_value($array, $id, $date);
-    $pre = $pre ? $pre : '';
-    $post = $post ? $post : '';
-    if($type == 'multi') {
-        wig_multi_card('goal', $title, $val, $pre, $post, $classes);
-    } else {
-        wig_single_card('goal', $title, $val, $pre, $post, $classes);
+    // Construct Array
+    $output = array(
+        'type'          => $metricType,
+        'title'         => '',
+        'value'         => '',
+        'pre'           => $pre,
+        'post'          => $post,
+        'classes'       => $classes,
+        'goal_val'      => '',
+        'win_loss'      => '',
+    );
+
+
+    // Weely Goal
+    if($metricType == 'Goal') {
+        $output['title'] = $title ? $title : get_goal_desc($array, $id);
+        $output['value'] = get_goal_value($array, $id, $date);
+        $output['win_loss'] = 'default';
     }
 
 
-}
+    // Weekly Metric
+    if($metricType == 'Metric') {
+        $output['title'] = $title ? $title : get_metric_desc($array, $metric);
+        $output['value'] = get_metric_value($array, $id, $date);
+        $output['goal_val'] = get_goal_value($array, $id, $date);
+    }
 
 
+    // Monthly Average Goal
+    if($metricType == 'Average Goal') {
+        $output['title'] = $title ? $title : $date;
+        $output['value'] = get_month_goal($array, $date, 'avggoal');
+    }
 
-function wig_single_metric($type = 'single',$array, $title, $metric, $date, $classes, $pre = '', $post = '', $operator = '>', $checkWin = true ) {
 
-    $title = $title ? $title : get_metric_desc($array, $metric);
-    $val = get_metric_value($array, $metric, $date);
-    $classes = $classes ? $classes : 'col-12 col-sm-6 col-md-3';
+    // Monthly Average Metric
+    if($metricType == 'Average') {
+        $output['title'] = $title ? $title : $date;
+        $output['value'] = get_month_avg($array, $date);
+        $output['goal_val'] = get_month_goal($array, $date, 'avggoal');
+    }
 
-    $win = '';
-    if($checkWin == true) {
-        if(is_win($val, get_goal_value($array, $metric, $date), $operator)) {
-            $win = 'win';
+
+    // Monthly Total Goal
+    if($metricType == 'Total Goal') {
+        $output['title'] = $title ? $title : $date;
+        $output['value'] = get_month_goal($array, $date, 'totalgoal');
+    }
+
+
+    // Monthly Total Metric
+    if($metricType == 'Total') {
+        $output['title'] = $title ? $title : $date;
+        $output['value'] = get_month_total($array, $date);
+        $output['goal_val'] = get_month_goal($array, $date, 'totalgoal');
+    }
+
+
+    // Check Wins
+    if($checkWin == true && $output['win_loss'] !== 'default') {
+        if(is_win($output['value'], $output['goal_val'], $operator)) {
+            $output['win_loss'] = 'win';
         } else {
-            $win = 'loss';
-        }
-    }
-    if($type == 'multi') {
-        wig_multi_card('metric', $title, $val, $pre, $post, $classes, $win);
-    } else {
-        wig_single_card('metric', $title, $val, $pre, $post, $classes, $win);
-    }
-
-}
-
-
-
-function wig_single_total($type = 'single', $array, $title, $date, $classes, $pre = '', $post = '',$operator = '>', $checkWin = true) {
-
-    $title = $title ? $title : $date;
-    $val = get_month_total($array, $date);
-    $classes = $classes ? $classes : 'col-12 col-sm-6 col-md-3';
-
-    $win = '';
-    if($checkWin == true) {
-        if(is_win($val, get_month_goal($array, $date, 'totalgoal'), $operator)) {
-            $win = 'win';
-        } else {
-            $win = 'loss';
-        }
-    }
-
-    if($type == 'multi') {
-        wig_multi_card('total', $title, $val, $pre, $post, $classes, $win);
-    } else {
-        wig_single_card('total', $title, $val, $pre, $post, $classes, $win);
-    }
-
-}
-
-
-function wig_single_avg($type = 'single', $array, $title, $date, $classes, $pre = '', $post = '', $operator = '>', $checkWin = true) {
-
-    $title = $title ? $title : $date;
-    $val = get_month_avg($array, $date);
-    $classes = $classes ? $classes : 'col-12 col-sm-6 col-md-3';
-
-    $win = '';
-    if($checkWin == true) {
-        if(is_win($val, get_month_goal($array, $date, 'avggoal'), $operator)) {
-            $win = 'win';
-        } else {
-            $win = 'loss';
+            $output['win_loss'] = 'loss';
         }
     }
 
+    // echo '<pre>';
+    //     print_r($output);
+    // echo '</pre>';
 
+
+    // Output Functions
     if($type == 'multi') {
-        wig_multi_card('average', $title, $val, $pre, $post, $classes, $win);
-    } else {
-        wig_single_card('average', $title, $val, $pre, $post, $classes, $win);
+        wig_multi_card(strtolower($metricType), $output['title'], $output['value'], $output['pre'], $output['post'], $output['classes'], $output['win_loss']);
+    } elseif($type == 'single') {
+        wig_single_card(strtolower($metricType), $output['title'], $output['value'], $output['pre'], $output['post'], $output['classes'], $output['win_loss']);
+    } elseif($type == 'raw') {
+        return $output;
     }
 
-}
 
+}
 
 
 function wig_testing() {
@@ -510,11 +511,17 @@ function wig_scoreboard_wig() {
     echo '<p>'.get_wig($data).'</p>';
 }
 
-function wig_single_metrics_board() {
-    $metrics = get_field('metrics');
-    $timeMeasure = get_field('time_measurement');
-    $data = wig_scorebord_data();
-    $title = get_field('metric_board_title');
+function wig_single_metrics_board($postID = '') {
+    if($postID) {
+        $postID = $postID;
+    } else {
+        global $post;
+        $postID = $post->id;
+    }
+    $metrics = get_field('metrics', $postID);
+    //$timeMeasure = get_field('time_measurement');
+    $data = wig_scorebord_data($postID);
+    $title = get_field('metric_board_title', $postID);
 
     if($metrics) {
 
@@ -524,35 +531,11 @@ function wig_single_metrics_board() {
             }
             foreach($metrics as $m) {
 
-                $useDate = get_time_measurement($timeMeasure, $m['date'], $m['date_monthly']);
+                $useDate = get_time_measurement($m['type'], $m['date'], $m['date_monthly']);
 
-                if($m['type'] == 'Goal') {
-                    //echo '<pre>'.print_r($m, true).'</pre>';
-
-                    wig_single_goal('single', $data, $m['title'], $m['id'], $useDate, $m['classes'], $m['prepend'], $m['append']);
-                }
-
-
-                if($m['type'] == 'Metric') {
-                    //echo '<pre>'.print_r($m, true).'</pre>';
-
-                    wig_single_metric('single', $data, $m['title'], $m['id'], $useDate, $m['classes'], $m['prepend'], $m['append'], $m['win_operator'], $m['check_win']);
-                }
-
-                if($m['type'] == 'Total') {
-                    //echo '<pre>'.print_r($m, true).'</pre>';
-
-                    wig_single_total('single', $data, $m['title'], $useDate, $m['classes'], $m['prepend'], $m['append'],$m['win_operator'], $m['check_win']);
-                }
-
-                if($m['type'] == 'Average') {
-                    //echo '<pre>'.print_r($m, true).'</pre>';
-
-                    wig_single_avg('single', $data, $m['title'], $useDate, $m['classes'], $m['prepend'], $m['append'], $m['win_operator'], $m['check_win']);
-                }
+                wig_value_output('single', $data, $m['type'], $m['title'], $m['id'], $useDate, $m['classes'], $m['prepend'], $m['append'], $m['win_operator'], $m['check_win']);
 
             }
         echo '</div>';
     }
-    //if(is_user_logged_in()) { echo '<a href="'.get_edit_post_link().'">Edit Scoreboard</a>'; }
 }

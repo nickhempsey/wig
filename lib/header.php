@@ -5,15 +5,15 @@ remove_action( 'genesis_after_header', 'genesis_do_nav' );
 remove_action( 'genesis_site_description', 'genesis_seo_site_description' );
 add_action('genesis_header', 'bsg_site_header_container_open', 6);
 add_action('genesis_header', 'genesis_do_nav', 11 );
-add_action('genesis_header', 'wig_close_header', 12 );
-add_action('genesis_header', 'bsg_site_header_container_close', 14);
+add_action('genesis_header', 'bsg_site_header_container_close', 12);
+add_action('genesis_header', 'wig_close_header', 14 );
 
 
 
 // Change the wrap classes for the site-header.
 add_filter( 'genesis_attr_site-header', 'bsg_filter_site_header' );
 function bsg_filter_site_header( $attributes ) {
-    $attributes['class'] = $attributes['class'].' py-3 closed border-right';
+    $attributes['class'] = $attributes['class'].' py-3 closed bg-dark';
     // $attributes['data-aos'] = "fade-right";
     // $attributes['data-aos-offset'] = "0";
     // $attributes['data-aos-delay'] = "0";
@@ -37,9 +37,9 @@ function bsg_site_header_container_open() {
 }
 
 // add classes to the containers
-add_filter('genesis_attr_site-header-container','bsg_filter_site_header_container');
+//add_filter('genesis_attr_site-header-container','bsg_filter_site_header_container');
 function bsg_filter_site_header_container($attributes) {
-  $attributes['class'] = $attributes['class'].' ';
+  //$attributes['class'] = $attributes['class'].' scrollbar';
   return $attributes;
 }
 
@@ -89,6 +89,8 @@ function bsg_filter_title_area( $attributes ) {
 
 function wig_close_header() {
     ?>
+    <img src="<?= get_stylesheet_directory_uri(); ?>/images/logo.svg" alt="<?= esc_attr( get_bloginfo( 'name' ) ); ?>" class="mobile-logo d-inline-block d-md-none">
+
     <div class="toggle-header">
         <span class="header-open"><i class="fal fa-lg fa-bars"></i></span>
         <span class="header-close"><i class="fal fa-lg fa-times-circle"></i></span>

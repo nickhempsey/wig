@@ -9,6 +9,7 @@ add_action( 'genesis_entry_header', 'wig_scoreboard_wig' );
 add_action('genesis_entry_content', 'wig_single_metrics_board');
 add_action('genesis_entry_content', 'wig_chart');
 add_filter( 'genesis_site_layout', '__genesis_return_full_width_content' );
+//add_action('genesis_entry_content', 'wig_rankings');
 
 
 

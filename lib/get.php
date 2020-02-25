@@ -51,3 +51,20 @@ function get_sheet_data($id) {
         return $obj;
     }
 }
+
+function val_sort($array,$key) {
+
+	//Loop through and get the values of our specified key
+	foreach($array as $k=>$v) {
+		$b[] = strtolower($v[$key]);
+	}
+
+	arsort($b);
+
+
+	foreach($b as $k=>$v) {
+		$c[] = $array[$k];
+	}
+
+    return $c;
+}

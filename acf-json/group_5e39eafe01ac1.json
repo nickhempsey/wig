@@ -22,11 +22,11 @@
             "maxlength": ""
         },
         {
-            "key": "field_5e3c27e7b60c7",
+            "key": "field_5e54380f8c002",
             "label": "Time Measurement",
             "name": "time_measurement",
             "type": "select",
-            "instructions": "Select the method by which the data is measured.  Weekly or Monthly.",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -37,6 +37,56 @@
             "choices": {
                 "Weekly": "Weekly",
                 "Monthly": "Monthly"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5e543a59483c1",
+            "label": "Monthly Win Metric",
+            "name": "monthly_win_metric",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Average": "Average",
+                "Total": "Total"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5e545277350e0",
+            "label": "Monthly Win Operator",
+            "name": "win_operator",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                ">": "Greater Than",
+                "<": "Less Than"
             },
             "default_value": [],
             "allow_null": 0,
@@ -81,7 +131,9 @@
                     "choices": {
                         "Goal": "Goal",
                         "Metric": "Metric",
+                        "Total Goal": "Total Goal",
                         "Total": "Total",
+                        "Average Goal": "Average Goal",
                         "Average": "Average"
                     },
                     "default_value": [],
@@ -115,7 +167,7 @@
                     "key": "field_5e39eb961fc63",
                     "label": "Goal \/ Metric ID",
                     "name": "id",
-                    "type": "number",
+                    "type": "text",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": [
@@ -143,9 +195,7 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "min": "",
-                    "max": "",
-                    "step": ""
+                    "maxlength": ""
                 },
                 {
                     "key": "field_5e39ec061fc64",
@@ -157,9 +207,16 @@
                     "conditional_logic": [
                         [
                             {
-                                "field": "field_5e3c27e7b60c7",
+                                "field": "field_5e39eb591fc61",
                                 "operator": "==",
-                                "value": "Weekly"
+                                "value": "Goal"
+                            }
+                        ],
+                        [
+                            {
+                                "field": "field_5e39eb591fc61",
+                                "operator": "==",
+                                "value": "Metric"
                             }
                         ]
                     ],
@@ -172,7 +229,8 @@
                         "This Week": "This Week",
                         "Last Week": "Last Week",
                         "This Month": "This Month",
-                        "Last Month": "Last Month"
+                        "Last Month": "Last Month",
+                        "This Year": "This Year"
                     },
                     "default_value": [],
                     "allow_null": 0,
@@ -192,9 +250,30 @@
                     "conditional_logic": [
                         [
                             {
-                                "field": "field_5e3c27e7b60c7",
+                                "field": "field_5e39eb591fc61",
                                 "operator": "==",
-                                "value": "Monthly"
+                                "value": "Total Goal"
+                            }
+                        ],
+                        [
+                            {
+                                "field": "field_5e39eb591fc61",
+                                "operator": "==",
+                                "value": "Total"
+                            }
+                        ],
+                        [
+                            {
+                                "field": "field_5e39eb591fc61",
+                                "operator": "==",
+                                "value": "Average Goal"
+                            }
+                        ],
+                        [
+                            {
+                                "field": "field_5e39eb591fc61",
+                                "operator": "==",
+                                "value": "Average"
                             }
                         ]
                     ],
@@ -386,25 +465,6 @@
                     "ui_off_text": ""
                 },
                 {
-                    "key": "field_5e3f251ee9ea5",
-                    "label": "WIG Ranking Metric",
-                    "name": "wig_ranking_metric",
-                    "type": "true_false",
-                    "instructions": "This metric will decide whether or not this month is a win.",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "message": "",
-                    "default_value": 0,
-                    "ui": 1,
-                    "ui_on_text": "",
-                    "ui_off_text": ""
-                },
-                {
                     "key": "field_5e40484ec1dc4",
                     "label": "",
                     "name": "",
@@ -488,5 +548,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1581271188
+    "modified": 1582584496
 }

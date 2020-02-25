@@ -34,30 +34,14 @@ function wig_single_view() {
 
                         $show = $m['show_on_views'];
                         $showCount = 1;
-                        $useDate = get_time_measurement($timeMeasure, $m['date'], $m['date_monthly']);
+
                         if($show && $showCount <= 4) {
-                            if($m['type'] == 'Goal') {
 
-                                wig_single_goal('multi', $data, $m['title'], $m['id'], $useDate, $m['classes'], $m['prepend'], $m['append']);
-                            }
+                            $useDate = get_time_measurement($m['type'], $m['date'], $m['date_monthly']);
 
-
-                            if($m['type'] == 'Metric') {
-
-                                wig_single_metric('multi', $data, $m['title'], $m['id'], $useDate, $m['classes'], $m['prepend'], $m['append'], $m['win_operator'], $m['check_win']);
-                            }
-
-                            if($m['type'] == 'Total') {
-
-                                wig_single_total('multi', $data, $m['title'], $useDate, $m['classes'], $m['prepend'], $m['append'], $m['win_operator'], $m['check_win']);
-                            }
-
-                            if($m['type'] == 'Average') {
-
-                                wig_single_avg('multi', $data, $m['title'], $useDate, $m['classes'], $m['prepend'], $m['append'], $m['win_operator'], $m['check_win']);
-                            }
-
+                            wig_value_output('multi', $data, $m['type'], $m['title'], $m['id'], $useDate, $m['classes'], $m['prepend'], $m['append'], $m['win_operator'], $m['check_win']);
                             $showCount++;
+                            
                         }
 
 

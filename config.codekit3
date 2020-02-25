@@ -2479,6 +2479,16 @@
 		"plM": 52780316221407,
 		"prP": 0
 		},
+	"/images/spinner-third-duotone.svg": {
+		"ft": 2097152,
+		"miP": 0,
+		"oA": 0,
+		"oAP": "/images/spinner-third-duotone.svg",
+		"oF": 0,
+		"opt": 0,
+		"plM": 52780316221407,
+		"prP": 0
+		},
 	"/js/aos.min.js": {
 		"bF": 0,
 		"ft": 64,
@@ -2598,6 +2608,14 @@
 		"hM": 0,
 		"oA": 0,
 		"oAP": "/lib/pagination.php",
+		"oF": 0
+		},
+	"/lib/rankings.php": {
+		"cB": 0,
+		"ft": 8192,
+		"hM": 0,
+		"oA": 0,
+		"oAP": "/lib/rankings.php",
 		"oF": 0
 		},
 	"/lib/scoreboards.php": {

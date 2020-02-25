@@ -18,7 +18,6 @@ html,body {
 }
 
 body {
-    background: $gray-800;
     color: white;
     height: 100vh;
     a {
@@ -42,11 +41,10 @@ body {
     width: 280px;
     transition: .3s ease-in-out;
     position: relative;
-
     .toggle-header {
         position: absolute;
         top: 1rem;
-        right: 1rem;
+        right: .75rem;
         cursor: pointer;
         color: #515151;
     }
@@ -121,6 +119,35 @@ body {
     }
 
     @include media-breakpoint-down(sm) {
+        .toggle-header {
+            position: relative;
+            float: right;
+            margin-right: 1rem;
+            padding-bottom: 1rem;
+            top:auto;
+            right:auto;
+        }
+        .mobile-logo {
+            margin-left: 1rem;
+            max-height: 26px;
+        }
+        &.open {
+
+            .toggle-header {
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                top: 1rem;
+                right: 1rem;
+                float: none;
+            }
+
+            .mobile-logo {
+                display: none !important;
+            }
+
+        }
+
         &.closed {
             height: 60px;
             padding-bottom: 0px !important;
@@ -132,8 +159,11 @@ body {
 }
 
 main.content {
+    background: $gray-800;
     width: calc(100% - 60px);
     transition: .3s ease-in-out;
+    border-right: 1px solid $gray-700;
+    border-left: 1px solid $gray-700;
     .menu-open &, .sidebar-present & {
         width: calc(100% - 280px);
     }
@@ -143,14 +173,26 @@ main.content {
 
     @include media-breakpoint-down(sm) {
         width: 100% !important;
+        border:none;
+        border-top: 1px solid $gray-700;
+        border-bottom: 1px solid $gray-700;
     }
 }
 
 .wig-sidebar {
     width: 280px;
     background: $black;
+    @include media-breakpoint-down(sm) {
+        width: 100% !important;
+    }
 }
 
+.wig-sidebar, main.content, header.site-header {
+    height: 100vh;
+    @include media-breakpoint-down(sm) {
+        height: auto;
+    }
+}
 
 .multi-metric-card {
     .multi-metric-value {
@@ -202,6 +244,11 @@ main.content {
 // Footer
 .site-footer {
     display: none;
+}
+
+
+main.content .swiper-slide {
+    padding-right: 20px;
 }
 
 .container-small {

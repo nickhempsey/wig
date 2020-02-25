@@ -1,9 +1,15 @@
 <?php
 
-function wig_chart() {
-    $metrics = get_field('metrics');
-    $timeMeasure = get_field('time_measurement');
-    $data = wig_scorebord_data();
+function wig_chart($postID = '') {
+    if($postID) {
+        $postID = $postID;
+    } else {
+        global $post;
+        $postID = $post->id;
+    }
+    $metrics = get_field('metrics', $postID);
+    $timeMeasure = get_field('time_measurement', $postID);
+    $data = wig_scorebord_data($postID);
 
     if($data && $metrics) {
         //echo '<pre class="bg-dark p-3 border-radius border">';
@@ -83,7 +89,7 @@ function wig_chart() {
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: false
                         }
                     }]
                 }
@@ -99,7 +105,7 @@ function wig_chart() {
     }
     ?>
     <div class="chart-container bg-dark p-3 border border-radius" style="position: relative; width:100%">
-        <canvas id="wigChart" height="9" width="16"></canvas>
+        <canvas id="wigChart" height="10" width="25"></canvas>
     </div>
     <div class="clearfix mb-5">&nbsp;</div>
     <?php
