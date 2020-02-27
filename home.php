@@ -14,38 +14,38 @@ function wig_home() {
 
     ?>
 
-    <div class="swiper-container fullwidth-swiper">
+    <div class="swiper-container pb-2 fullwidth-swiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
 
                 <h2 class="border-bottom pb-3 mb-3">First Time Guests</h2>
 
                 <?php
-                $args = array(
-                    'post_type' => 'scoreboards',
-                    'post__in' => array(26),
-                    'posts_per_page' => 1,
-                );
-                $scoreboard = new WP_Query($args);
+                    $args = array(
+                        'post_type' => 'scoreboards',
+                        'post__in' => array(26),
+                        'posts_per_page' => 1,
+                    );
+                    $scoreboard = new WP_Query($args);
 
-                if($scoreboard->have_posts()) {
-                    while($scoreboard->have_posts()) {
-                        $scoreboard->the_post();
+                    if($scoreboard->have_posts()) {
+                        while($scoreboard->have_posts()) {
+                            $scoreboard->the_post();
 
-                        wig_single_metrics_board($scoreboard->ID);
+                            wig_single_metrics_board($scoreboard->ID);
 
-                        wig_chart($scoreboard->ID);
+                            wig_chart($scoreboard->ID);
 
+                        }
                     }
-                }
 
-                wp_reset_postdata();
+                    wp_reset_postdata();
 
                 ?>
             </div>
 
             <div class="swiper-slide">
-                <h2 class="border-bottom pb-3 mb-3">Department Overview</h2>
+                <?php //<h2 class="border-bottom pb-3 mb-3">Department Overview</h2> ?>
                 <?php wig_single_view(); ?>
             </div>
         </div>

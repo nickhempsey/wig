@@ -1,7 +1,6 @@
 <?php
 
-function wig_single_view() {
-
+function wig_single_view($data = '') {
     $scoreboards = get_field('board_sync');
 
     //echo '<pre>'.print_r($scoreboards,true).'</pre>';
@@ -21,7 +20,7 @@ function wig_single_view() {
                     if($show) { $showTotal++; }
                 }
 
-                    echo '<div class="col-12 col-sm-6 col-md-4 col-xl-3 multi-metric-card mb-4 ">';
+                    echo '<div class="col-12 col-sm-6 col-md-4 multi-metric-card mb-4 ">';
                         echo '<h4 class="titles col-12 bg-primary text-white mb-0 py-1 px-2 border-top border-left border-right"><a href="'.get_permalink($sb->ID).'" class="d-flex h-100 justify-content-between align-items-center"><span>'.$sb->post_title.'</span> <span class="icon"><i class="fal fa-sm fa-long-arrow-right"></i></span></a></h4>';
                         echo '<div class="values bg-dark row mx-0 align-items-md-stretch border-left border-right">';
 
@@ -41,7 +40,7 @@ function wig_single_view() {
 
                             wig_value_output('multi', $data, $m['type'], $m['title'], $m['id'], $useDate, $m['classes'], $m['prepend'], $m['append'], $m['win_operator'], $m['check_win']);
                             $showCount++;
-                            
+
                         }
 
 

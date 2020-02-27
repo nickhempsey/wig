@@ -29,7 +29,7 @@ jQuery(document).ready(function($) {
     var mySwiper = new Swiper('.swiper-container', {
         speed: 400,
         spaceBetween: 100,
-        autoHeight: true,
+        autoHeight: false,
         slidesPerView: 1,
         autoplay: {
             delay: 20000,
@@ -45,7 +45,7 @@ jQuery(document).ready(function($) {
 
         var scrollbar = document.querySelector('.scrollbar');
         SimpleScrollbar.initEl(scrollbar);
-        
+
     }, 1000);
 
 });

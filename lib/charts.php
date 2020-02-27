@@ -107,7 +107,7 @@ function wig_chart($postID = '') {
     <div class="chart-container bg-dark p-3 border border-radius" style="position: relative; width:100%">
         <canvas id="wigChart" height="10" width="25"></canvas>
     </div>
-    <div class="clearfix mb-5">&nbsp;</div>
+    <div class="clearfix mb-3">&nbsp;</div>
     <?php
     }
 }
