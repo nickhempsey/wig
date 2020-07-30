@@ -52,6 +52,24 @@ function get_sheet_data($id) {
     }
 }
 
+function key_val_arrange($data) {
+    if($data) {
+        $rows = $data['rows'];
+
+        if($rows) {
+
+            $output = array();
+
+            foreach($rows as $row) {
+                $output[$row['key']] = $row['value'];
+            }
+
+            return $output;
+            
+        }
+    }
+}
+
 function val_sort($array,$key) {
 
 	//Loop through and get the values of our specified key
